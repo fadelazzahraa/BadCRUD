@@ -1,4 +1,4 @@
-import unittest
+import unittest, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -7,24 +7,28 @@ class TestCase(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         option = webdriver.FirefoxOptions()
-        # option.add_argument('--headless')
         self.browser = webdriver.Firefox(options=option)
+        option.add_argument('--headless')
+        try:
+            self.url = os.environ['URL']
+        except:
+            self.url = "http://localhost"
         
 
-    def test_5_login_with_sql_injection_attack(self):
-        self.browser.get("http://localhost:8068/badcrud/login.php")
+    def test_1_login_with_correct_credentials(self):
+        self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
         password_input = self.browser.find_element(By.ID, "inputPassword")
-        # wrong cred
-        username_input.send_keys('admin"#') # attack based on sql query that use double quote
-        password_input.send_keys("password")
+
+        username_input.send_keys("admin")
+        password_input.send_keys("nimda666!")
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
         self.browser.implicitly_wait(2)
 
-        expected_result = 'Halo, admin"#'
+        expected_result = "Halo, admin"
         actual_result = self.browser.find_element(By.TAG_NAME, "h2").text
 
         self.assertTrue(expected_result, actual_result)

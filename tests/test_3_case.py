@@ -1,4 +1,4 @@
-import unittest
+import unittest, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -7,12 +7,16 @@ class TestCase(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         option = webdriver.FirefoxOptions()
-        # option.add_argument('--headless')
         self.browser = webdriver.Firefox(options=option)
+        option.add_argument('--headless')
+        try:
+            self.url = os.environ['URL']
+        except:
+            self.url = "http://localhost"
         
 
     def test_3_login_with_wrong_username_credentials(self):
-        self.browser.get("http://localhost:8068/badcrud/login.php")
+        self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
         password_input = self.browser.find_element(By.ID, "inputPassword")
