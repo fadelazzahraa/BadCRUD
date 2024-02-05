@@ -43,7 +43,12 @@ class TestCase(unittest.TestCase):
 
     def step_4_search_new_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
-        search_input.send_keys("Account to Edit") # get account to delete
+        search_input.send_keys("Account to Delete") # get account to delete
+
+        expected_result = 'Account to Delete'
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+
+        self.assertTrue(expected_result, actual_result)
 
     def step_5_delete_new_value(self):
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td[7]/a[2]").click()

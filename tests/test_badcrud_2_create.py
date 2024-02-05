@@ -46,7 +46,7 @@ class TestCase(unittest.TestCase):
         search_input.send_keys("Fadel Azzahra") # get new employee contains "Fadel Azzahra"
 
         expected_result = 'Fadel Azzahra'
-        actual_result = self.browser.find_element(By.CLASS_NAME, "odd").find_elements(By.TAG_NAME, "td")[1].text # odd = class for first row in table. expected only 1 value found
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
 
         self.assertTrue(expected_result, actual_result)
     
