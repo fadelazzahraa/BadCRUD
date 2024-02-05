@@ -39,9 +39,9 @@ jobs:
         run: curl http://localhost:4444/ui
 
       - name: Install Selenium client with pytest
-        run: pip install -U selenium pytest
+        run: pip install -U selenium pytest pytest-xdist
 
-      - name: Run tests using pytest
+      - name: Run tests using pytest 
         run: pytest -v -n 5 tests/
 
       - name: stop docker
