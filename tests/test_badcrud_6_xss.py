@@ -15,22 +15,24 @@ class TestCase(unittest.TestCase):
             self.url = "http://localhost"
         
 
-    def test_4_login_with_wrong_credentials(self):
+    def test_1_login(self):
         self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
         password_input = self.browser.find_element(By.ID, "inputPassword")
-        # wrong cred
-        username_input.send_keys("user")
+        username_input.send_keys("admin")
         password_input.send_keys("nimda666!")
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
-        self.browser.implicitly_wait(2)
+    def test_2_go_to_xss_menu(self):
+        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/a[2]").click()
 
-        expected_result = "Wrong usename or password"
-        actual_result = self.browser.find_element(By.CLASS_NAME, "checkbox").find_element(By.TAG_NAME, "label").text
-
+    def test_3_inject_script_and_check(self):
+        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/p/input").send_keys("<script>alert('XSSFadel')</script>")
+        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/input").click()
+        actual_result = self.browser.switch_to.alert.text
+        expected_result = "XSSFadel"
         self.assertTrue(expected_result, actual_result)
 
     @classmethod

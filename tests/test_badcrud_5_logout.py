@@ -15,23 +15,22 @@ class TestCase(unittest.TestCase):
             self.url = "http://localhost"
         
 
-    def test_5_login_with_sql_injection_attack(self):
+    def test_1_login(self):
         self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
         password_input = self.browser.find_element(By.ID, "inputPassword")
-        # wrong cred
-        username_input.send_keys('admin"#') # attack based on sql query that use double quote
-        password_input.send_keys("password")
+        username_input.send_keys("admin")
+        password_input.send_keys("nimda666!")
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
-        self.browser.implicitly_wait(2)
-
-        expected_result = 'Halo, admin"#'
-        actual_result = self.browser.find_element(By.TAG_NAME, "h2").text
-
+    def test_2_go_to_logout_menu(self):
+        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/a[3]").click()
+        actual_result = self.browser.find_element(By.XPATH, "/html/body/form/h1").text
+        expected_result = "Please sign in"
         self.assertTrue(expected_result, actual_result)
+
 
     @classmethod
     def tearDownClass(self):

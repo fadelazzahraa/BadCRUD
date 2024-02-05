@@ -15,21 +15,22 @@ class TestCase(unittest.TestCase):
             self.url = "http://localhost"
         
 
-    def test_1_login_with_correct_credentials(self):
+    def test_1_login(self):
         self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
         password_input = self.browser.find_element(By.ID, "inputPassword")
-
         username_input.send_keys("admin")
         password_input.send_keys("nimda666!")
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
-        self.browser.implicitly_wait(2)
+    def test_2_search(self):
+        search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input.send_keys("doe") # trying get employee contains "doe" (John Does)
 
-        expected_result = "Halo, admin"
-        actual_result = self.browser.find_element(By.TAG_NAME, "h2").text
+        expected_result = 'John Does'
+        actual_result = self.browser.find_element(By.CLASS_NAME, "odd").find_elements(By.TAG_NAME, "td")[1].text # odd = class for first row in table. expected only 1 value found
 
         self.assertTrue(expected_result, actual_result)
 
