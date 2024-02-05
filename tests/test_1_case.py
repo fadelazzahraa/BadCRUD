@@ -7,8 +7,8 @@ class TestCase(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         option = webdriver.FirefoxOptions()
-        self.browser = webdriver.Firefox(options=option)
         option.add_argument('--headless')
+        self.browser = webdriver.Firefox(options=option)
         try:
             self.url = os.environ['URL']
         except:
