@@ -14,8 +14,12 @@ class TestCase(unittest.TestCase):
         except:
             self.url = "http://localhost"
         
+    def test(self):
+        self.step_1_login()
+        self.step_2_go_to_xss_menu()
+        self.step_3_inject_script_and_check()
 
-    def test_1_login(self):
+    def step_1_login(self):
         self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
@@ -25,10 +29,10 @@ class TestCase(unittest.TestCase):
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
-    def test_2_go_to_xss_menu(self):
+    def step_2_go_to_xss_menu(self):
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/a[2]").click()
 
-    def test_3_inject_script_and_check(self):
+    def step_3_inject_script_and_check(self):
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/p/input").send_keys("<script>alert('XSSFadel')</script>")
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/input").click()
         actual_result = self.browser.switch_to.alert.text

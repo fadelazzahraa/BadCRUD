@@ -13,9 +13,12 @@ class TestCase(unittest.TestCase):
             self.url = os.environ['URL']
         except:
             self.url = "http://localhost"
-        
+    
+    def test(self):
+        self.step_1_login()
+        self.step_2_search()
 
-    def test_1_login(self):
+    def step_1_login(self):
         self.browser.get(self.url + "/login.php")
 
         username_input = self.browser.find_element(By.ID, "inputUsername")
@@ -25,12 +28,14 @@ class TestCase(unittest.TestCase):
 
         self.browser.find_element(By.TAG_NAME, "button").click()
 
-    def test_2_go_to_logout_menu(self):
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/a[3]").click()
-        actual_result = self.browser.find_element(By.XPATH, "/html/body/form/h1").text
-        expected_result = "Please sign in"
-        self.assertTrue(expected_result, actual_result)
+    def step_2_search(self):
+        search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input.send_keys("doe") # trying get employee contains "doe" (John Does)
 
+        expected_result = 'John Does'
+        actual_result = self.browser.find_element(By.CLASS_NAME, "odd").find_elements(By.TAG_NAME, "td")[1].text # odd = class for first row in table. expected only 1 value found
+
+        self.assertTrue(expected_result, actual_result)
 
     @classmethod
     def tearDownClass(self):
