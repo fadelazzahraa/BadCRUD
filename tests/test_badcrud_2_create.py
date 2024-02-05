@@ -33,20 +33,33 @@ class TestCase(unittest.TestCase):
         self.browser.find_element(By.ID, "email").send_keys("fadel@mail.com")
         self.browser.find_element(By.ID, "phone").send_keys("01234567890")
         self.browser.find_element(By.ID, "title").send_keys("Tester")
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div[1]/form/input[5]").click()
+        self.browser.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
+
+        expected_result = "Dashboard"
+        actual_result = self.browser.title
+        self.assertTrue(expected_result, actual_result)
 
     def test_4_search_new_value(self):
-        search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input = self.browser.find_element(By.TAG_NAME, "input")
         search_input.send_keys("Fadel Azzahra") # get new employee contains "Fadel Azzahra"
 
         expected_result = 'Fadel Azzahra'
-        actual_result = self.browser.find_element(By.CLASS_NAME, "odd").find_elements(By.TAG_NAME, "td")[1].text # odd = class for first row in table. expected only 1 value found
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), 'Fadel Azzahra')]")
 
         self.assertTrue(expected_result, actual_result)
     
     def test_5_clear_mess(self):
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td[7]/a[2]").click()
+        header_row = self.browser.find_element(By.XPATH, "//tr[@role='row'][1]//td[contains(@class, 'actions')]")
+        delete_button = header_row.find_element(By.XPATH, ".//a[contains(@class, 'btn-danger')]").click()   
         self.browser.switch_to.alert.accept()
+        
+        search_input = self.browser.find_element(By.TAG_NAME, "input")
+        search_input.send_keys("Fadel Azzahra") # get new employee contains "Fadel Azzahra"
+
+        expected_result = 'Fadel Azzahra'
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), 'Fadel Azzahra')]")
+
+        self.assertFalse(expected_result, actual_result)
 
     @classmethod
     def tearDownClass(self):
