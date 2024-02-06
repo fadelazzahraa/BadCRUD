@@ -8,9 +8,6 @@ jobs:
     name: ZAP
     permissions: write-all
     runs-on: ubuntu-latest
-    env:
-      ZAP_AUTH_HEADER: PHPSESSID
-      ZAP_AUTH_HEADER_VALUE: ${{ env.COOKIE_VALUE }}
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4

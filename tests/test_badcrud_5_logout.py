@@ -2,7 +2,7 @@ import unittest, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-class TestCase(unittest.TestCase):
+class LogoutTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):

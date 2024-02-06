@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-class TestCase(unittest.TestCase):
+class DeleteTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
