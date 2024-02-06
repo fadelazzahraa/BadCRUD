@@ -49,6 +49,7 @@ class TestCase(unittest.TestCase):
 
     def step_4_search_new_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input.clear()
         search_input.send_keys("Account to Delete") # get account to delete
         search_input.send_keys(Keys.ENTER)
 
@@ -69,6 +70,7 @@ class TestCase(unittest.TestCase):
 
     def step_6_search_deleted_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input.clear()
         search_input.send_keys("Account to Delete") # get new employee contains "Fadel Azzahra"
         search_input.send_keys(Keys.ENTER)
 
