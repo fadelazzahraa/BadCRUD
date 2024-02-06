@@ -72,7 +72,7 @@ class TestCase(unittest.TestCase):
         search_input.send_keys("Account is Edited") # get edited account
         search_input.send_keys(Keys.ENTER)
 
-        expected_result = 'Account is Edited'
+        expected_result = "Account is Edited"
         actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
 
         self.assertTrue(expected_result, actual_result)
