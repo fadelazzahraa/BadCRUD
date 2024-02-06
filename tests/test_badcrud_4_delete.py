@@ -51,7 +51,9 @@ class TestCase(unittest.TestCase):
         self.assertTrue(expected_result, actual_result)
 
     def step_5_delete_new_value(self):
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td[7]/a[2]").click()
+        actions_section = self.browser.find_element(By.XPATH, "//tr[@role='row'][1]//td[contains(@class, 'actions')]")
+        actions_section.find_element(By.XPATH, ".//a[contains(@class, 'btn-danger')]").click()
+
         self.browser.switch_to.alert.accept()
 
     @classmethod
