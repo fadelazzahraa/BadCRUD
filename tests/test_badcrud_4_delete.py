@@ -1,4 +1,4 @@
-import unittest, os
+import unittest, time, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -20,6 +20,7 @@ class TestCase(unittest.TestCase):
         self.step_3_fill_form_and_submit()
         self.step_4_search_new_value()
         self.step_5_delete_new_value()
+        self.step_6_search_deleted_value()
 
     def step_1_login(self):
         self.browser.get(self.url + "/login.php")
@@ -55,6 +56,20 @@ class TestCase(unittest.TestCase):
         actions_section.find_element(By.XPATH, ".//a[contains(@class, 'btn-danger')]").click()
 
         self.browser.switch_to.alert.accept()
+        
+        time.sleep(5)
+    
+    def step_6_search_deleted_value(self):
+        search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
+        search_input.send_keys("Account to Delete") # get new employee contains "Fadel Azzahra"
+
+        expected_result = 'Account to Delete'
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+
+        # check if wrong
+        self.assertFalse(expected_result, actual_result)
+    
+
 
     @classmethod
     def tearDownClass(self):
