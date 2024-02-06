@@ -79,7 +79,7 @@ class TestCase(unittest.TestCase):
         search_input.send_keys(Keys.ENTER)
 
         expected_result = "Account is Edited"
-        edited_contact_exists = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+        edited_contact_exists = self.browser.find_element(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
         self.assertTrue(edited_contact_exists)
     
     def step_7_clear_mess(self):

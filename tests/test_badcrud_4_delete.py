@@ -75,7 +75,7 @@ class TestCase(unittest.TestCase):
         search_input.send_keys(Keys.ENTER)
 
         expected_result = 'Account to Delete'
-        actual_result_exist = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+        actual_result_exist = self.browser.find_element(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
 
         # check if wrong
         self.assertFalse(actual_result_exist)
