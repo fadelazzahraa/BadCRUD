@@ -1,6 +1,7 @@
 import unittest, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 class TestCase(unittest.TestCase):
 
@@ -31,6 +32,7 @@ class TestCase(unittest.TestCase):
     def step_2_search(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.send_keys("doe") # trying get employee contains "doe" (John Does)
+        search_input.send_keys(Keys.ENTER)
 
         expected_result = 'John Does'
         actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")

@@ -1,6 +1,7 @@
 import unittest, time, os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 class TestCase(unittest.TestCase):
 
@@ -45,6 +46,7 @@ class TestCase(unittest.TestCase):
     def step_4_search_new_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.send_keys("Account to Delete") # get account to delete
+        search_input.send_keys(Keys.ENTER)
 
         expected_result = 'Account to Delete'
         actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
@@ -62,12 +64,13 @@ class TestCase(unittest.TestCase):
     def step_6_search_deleted_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.send_keys("Account to Delete") # get new employee contains "Fadel Azzahra"
+        search_input.send_keys(Keys.ENTER)
 
         expected_result = 'Account to Delete'
-        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+        actual_result_exist = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
 
         # check if wrong
-        self.assertFalse(expected_result, actual_result)
+        self.assertFalse(actual_result_exist)
     
 
 

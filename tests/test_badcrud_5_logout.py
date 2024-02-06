@@ -31,6 +31,7 @@ class TestCase(unittest.TestCase):
     def step_2_go_to_logout_menu(self):
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/a[3]").click()
         actual_result = self.browser.find_element(By.XPATH, "/html/body/form/h1").text
+        
         expected_result = "Please sign in"
         self.assertTrue(expected_result, actual_result)
 

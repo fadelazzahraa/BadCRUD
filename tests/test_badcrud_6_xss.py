@@ -36,6 +36,7 @@ class TestCase(unittest.TestCase):
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/p/input").send_keys("<script>alert('XSSFadel')</script>")
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/form/input").click()
         actual_result = self.browser.switch_to.alert.text
+        
         expected_result = "XSSFadel"
         self.assertTrue(expected_result, actual_result)
 
