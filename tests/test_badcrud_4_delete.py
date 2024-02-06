@@ -41,7 +41,11 @@ class TestCase(unittest.TestCase):
         self.browser.find_element(By.ID, "email").send_keys("edit@mail.com")
         self.browser.find_element(By.ID, "phone").send_keys("01234567890")
         self.browser.find_element(By.ID, "title").send_keys("Tester")
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div[1]/form/input[5]").click()
+        self.browser.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
+
+        index_page_title = "Dashboard"
+        actual_title = self.browser.title
+        self.assertEqual(index_page_title, actual_title)
 
     def step_4_search_new_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
@@ -54,12 +58,15 @@ class TestCase(unittest.TestCase):
         self.assertTrue(expected_result, actual_result)
 
     def step_5_delete_new_value(self):
-        self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td[7]/a[2]").click()
+        actions_section = self.browser.find_element(By.XPATH, "//tr[@role='row'][1]//td[contains(@class, 'actions')]")
+        delete_button = actions_section.find_element(By.XPATH, ".//a[contains(@class, 'btn-danger')]")
+
+        delete_button.click()
 
         self.browser.switch_to.alert.accept()
-        
-        time.sleep(5)
-    
+
+        time.sleep(3)
+
     def step_6_search_deleted_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.send_keys("Account to Delete") # get new employee contains "Fadel Azzahra"
