@@ -42,7 +42,7 @@ jobs:
         run: pip install -U selenium pytest pytest-xdist
 
       - name: Get and Save Session
-        run: python getSession.py
+        run: python ./getsession.py
       - name: Read Session File and Set Cookie Value
         run: |
           COOKIE_VALUE=$(cat session_file.txt)
