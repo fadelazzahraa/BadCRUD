@@ -74,7 +74,6 @@ class TestCase(unittest.TestCase):
 
     def step_6_search_edited_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
-        search_input.clear()
         search_input.send_keys("Account is Edited") # get edited account
         search_input.send_keys(Keys.ENTER)
 

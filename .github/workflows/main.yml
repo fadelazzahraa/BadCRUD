@@ -39,7 +39,7 @@ jobs:
         run: curl http://localhost:4444/ui
 
       - name: Install Selenium client with pytest
-        run: pip install -U selenium pytest-xdist
+        run: pip install -U selenium pytest pytest-xdist
 
       - name: Run tests using pytest with 6 worker
         run: pytest -v -n 6 tests/

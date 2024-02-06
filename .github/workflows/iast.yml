@@ -8,6 +8,9 @@ jobs:
     name: ZAP
     permissions: write-all
     runs-on: ubuntu-latest
+    env:
+      ZAP_AUTH_HEADER: PHPSESSID
+      ZAP_AUTH_HEADER_VALUE: ${{ env.COOKIE_VALUE }}
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -52,9 +55,8 @@ jobs:
         uses: hermanka/action-full-scan@master
         with:
           target: ${{ env.URL }}
-          ZAP_AUTH_HEADER: PHPSESSID
-          ZAP_AUTH_HEADER_VALUE: ${{ env.COOKIE_VALUE }}
-          cmd_options: -z "-config api.addrs.addr.url=https://$GITHUB_WORKSPACE/session_file -config ZAP_AUTH_HEADER=PHPSESSID -config ZAP_AUTH_HEADER_VALUE=$(cat $GITHUB_WORKSPACE/session_file)"
+          
+          cmd_options: -z "-config ZAP_AUTH_HEADER=PHPSESSID -config ZAP_AUTH_HEADER_VALUE=${{ env.COOKIE_VALUE }}"
 
       - name: Stop Docker
         run: docker stop docker-apache 
