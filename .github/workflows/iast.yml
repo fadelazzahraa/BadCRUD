@@ -8,6 +8,7 @@ jobs:
     name: DAST
     permissions: write-all
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -34,6 +35,7 @@ jobs:
         with:
           target: ${{ env.URL }}
           network_name: isolated
+          cmd_options: '-z --api-cookie=${{ env.PHPSESSID_COOKIE }}'
            
       - name: Stop Docker
         run: docker stop docker-apache  
