@@ -47,6 +47,10 @@ class TestCase(unittest.TestCase):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.send_keys("Account to Edit") # get account to edit
 
+        expected_result = 'Account to Edit'
+        actual_result = self.browser.find_elements(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+        self.assertTrue(expected_result, actual_result)
+
         self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td[7]/a[1]").click()
 
     def step_5_fill_form_to_edit_and_submit(self):
