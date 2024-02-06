@@ -13,7 +13,7 @@ class TestCase(unittest.TestCase):
         try:
             self.url = os.environ['URL']
         except:
-            self.url = "http://localhost"
+            self.url = "http://localhost:8068/badcrud"
         
     def test(self):
         self.step_1_login()

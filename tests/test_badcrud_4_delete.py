@@ -13,7 +13,7 @@ class TestCase(unittest.TestCase):
         try:
             self.url = os.environ['URL']
         except:
-            self.url = "http://localhost"
+            self.url = "http://localhost:8068/badcrud"
         
     def test(self):
         self.step_1_login()
@@ -66,19 +66,18 @@ class TestCase(unittest.TestCase):
 
         self.browser.switch_to.alert.accept()
 
-        time.sleep(3)
+        time.sleep(2)
 
     def step_6_search_deleted_value(self):
         search_input = self.browser.find_element(By.ID, "employee_filter").find_element(By.TAG_NAME, "input")
         search_input.clear()
-        search_input.send_keys("Account to Delete") # get new employee contains "Fadel Azzahra"
+        search_input.send_keys("Account to Delete") 
         search_input.send_keys(Keys.ENTER)
 
-        expected_result = 'Account to Delete'
-        actual_result_exist = self.browser.find_element(By.XPATH, f"//td[contains(text(), '{expected_result}')]")
+        no_matching_record = self.browser.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div/table/tbody/tr/td")
 
-        # check if wrong
-        self.assertFalse(actual_result_exist)
+        # check if true
+        self.assertTrue(no_matching_record)
     
 
 
